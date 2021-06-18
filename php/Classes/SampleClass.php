@@ -21,6 +21,7 @@ class SampleClass implements \JsonSerializable {
 
 	/**
 	 * This is representative of any attribute that is a UUID and is stored as a 16 Bit Binary in MySQL.
+	 * this is a
 	 * SampleClass Attribute sampleClassId, required
 	 * @var UuidInterface $sampleClassId
 	 */
@@ -147,7 +148,7 @@ class SampleClass implements \JsonSerializable {
 		string|null $sampleClassJsonPackageNotRequired, float|null $sampleClassRoundedDecimalNotRequired,
 		string $sampleClassSetLengthStringRequired, string $sampleClassVariableLengthStringRequired) {
 		try {
-			//construct Charge
+			//construct SampleClass
 			$this->setSampleClassId($sampleClassId);
 			$this->setSampleClassBitsRequired($sampleClassBitsRequired);
 			$this->setSampleClassBlobNotRequired($sampleClassBlobNotRequired);
@@ -167,33 +168,6 @@ class SampleClass implements \JsonSerializable {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 	}
-
-UuidInterface | string $sampleClassId
- 
-string $sampleClassBitsRequired
- 
-null|string $sampleClassBlobNotRequired
- 
-null|string|\DateTime $sampleClassDateTimeFutureNotRequired
- 
-string|\DateTime $sampleClassDateTimeNowRequired
- 
-string|\DateTime $sampleClassDateTimePastRequired
- 
-string $sampleClassEnumStringRequired
- 
-float $sampleClassExactDecimalRequired
- 
-int|null $sampleClassIntegerNotRequired
- 
-string|null $sampleClassJsonPackageNotRequired
- 
-float|null $sampleClassRoundedDecimalNotRequired
- 
-string $sampleClassSetLengthStringRequired
- 
-string $sampleClassVariableLengthStringRequired
- 
 	
 	/***
 	 *       _____   ______   _______   _______   ______   _____     _____       __   _____   ______   _______   _______   ______   _____     _____
@@ -207,15 +181,23 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function getSampleClassId(UuidInterface) {
-		
+	public function getSampleClassId():UuidInterface{
+		return $this->sampleClassId;
 	}
 
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassId(UuidInterface | string $sampleClassId) {
-		
+	public function setSampleClassId(UuidInterface | string $newSampleClassId) {
+		//convert to UuidInterface or throw exception
+		try {
+			$uuid = self::validateUuid($newSampleClassId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//store subscriptionContactId
+		$this->sampleClassId = $uuid;
 	}
 
 	/**
@@ -228,7 +210,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassBitsRequired(string $sampleClassBitsRequired) {
+	public function setSampleClassBitsRequired(string $newSampleClassBitsRequired) {
 		
 	}
 
@@ -242,7 +224,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassBlobNotRequired(null|string $sampleClassBlobNotRequired) {
+	public function setSampleClassBlobNotRequired(null|string $newSampleClassBlobNotRequired) {
 		
 	}
 
@@ -256,7 +238,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassDateTimeFutureNotRequired(null|string|\DateTime $sampleClassDateTimeFutureNotRequired) {
+	public function setSampleClassDateTimeFutureNotRequired(null|string|\DateTime $newSampleClassDateTimeFutureNotRequired) {
 		
 	}
 
@@ -270,7 +252,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassDateTimeNowRequired(string|\DateTime $sampleClassDateTimeNowRequired) {
+	public function setSampleClassDateTimeNowRequired(string|\DateTime $newSampleClassDateTimeNowRequired) {
 		
 	}
 
@@ -284,7 +266,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassDateTimePastRequired(string|\DateTime $sampleClassDateTimePastRequired) {
+	public function setSampleClassDateTimePastRequired(string|\DateTime $newSampleClassDateTimePastRequired) {
 		
 	}
 
@@ -298,7 +280,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassEnumStringRequired(string $sampleClassEnumStringRequired) {
+	public function setSampleClassEnumStringRequired(string $newSampleClassEnumStringRequired) {
 		
 	}
 
@@ -312,7 +294,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassExactDecimalRequired(float $sampleClassExactDecimalRequired) {
+	public function setSampleClassExactDecimalRequired(float $newSampleClassExactDecimalRequired) {
 		
 	}
 
@@ -326,7 +308,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassIntegerNotRequired(int|null $sampleClassIntegerNotRequired) {
+	public function setSampleClassIntegerNotRequired(int|null $newSampleClassIntegerNotRequired) {
 		
 	}
 
@@ -340,7 +322,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassJsonPackageNotRequired(string|null $sampleClassJsonPackageNotRequired) {
+	public function setSampleClassJsonPackageNotRequired(string|null $newSampleClassJsonPackageNotRequired) {
 		
 	}
 
@@ -354,7 +336,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassRoundedDecimalNotRequired(float|null $sampleClassRoundedDecimalNotRequired) {
+	public function setSampleClassRoundedDecimalNotRequired(float|null $newSampleClassRoundedDecimalNotRequired) {
 		
 	}
 
@@ -368,7 +350,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassSetLengthStringRequired(string $sampleClassSetLengthStringRequired) {
+	public function setSampleClassSetLengthStringRequired(string $newSampleClassSetLengthStringRequired) {
 		
 	}
 
@@ -382,7 +364,7 @@ string $sampleClassVariableLengthStringRequired
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassVariableLengthStringRequired(string $sampleClassVariableLengthStringRequired) {
+	public function setSampleClassVariableLengthStringRequired(string $newSampleClassVariableLengthStringRequired) {
 		
 	}
 	}
