@@ -186,17 +186,33 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting sampleClassId
+	 * @param UuidInterface|string $newSampleClassId
+	 * @throws \Exception
+	 * @throws \RangeException
+	 * @throws \InvalidArgumentException
+	 * @throws \TypeError
 	 */
 	public function setSampleClassId(UuidInterface | string $newSampleClassId) {
-		//convert to UuidInterface or throw exception
+		/*
+		 * Check if sampleClassId is empty, throw an exception if it is
+		 */
+		if(empty($newSampleClassId)) {
+			throw (new \RangeException("Sample Class Exception: sampleClassId is a required field."));
+		}
+
+		/**
+		 * Try to convert new string or UuidInterface to UuidInterface, if it fails throw the appropriate exception
+		 * Note: A new variable is used when converting to UuidInterface in order to avoid potential typing issues
+		 */
 		try {
 			$uuid = self::validateUuid($newSampleClassId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		//store subscriptionContactId
+
+		//store value as sampleClassId in sampleClass object
 		$this->sampleClassId = $uuid;
 	}
 
@@ -204,167 +220,185 @@ class SampleClass implements \JsonSerializable {
 	 * Method for 
 	 */
 	public function getSampleClassBitsRequired():string {
-		
+		return $this->sampleClassBitsRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassBitsRequired(string $newSampleClassBitsRequired) {
-		
+		/*
+		 * trim and run built in php sanitization on new string
+		 */
+		$newSampleClassBitsRequired=trim($newSampleClassBitsRequired);
+		$newSampleClassBitsRequired=filter_var($newSampleClassBitsRequired, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		/*
+		 * Check if string is null or has no characters, throw an exception if true
+		 */
+		if(empty($newSampleClassBitsRequired) || strlen($newSampleClassBitsRequired)<=0){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+		}
+		/*
+		 * Check if string has too many characters to be stored in the database
+		 */
+		elseif(strlen($newSampleClassBitsRequired)>200){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired has too many characters after sanitization."));
+		}
+
+		$this->sampleClassBitsRequired=$newSampleClassBitsRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassBlobNotRequired():null|string {
-		
+		return $this->sampleClassBlobNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassBlobNotRequired(null|string $newSampleClassBlobNotRequired) {
-		
+		$this->sampleClassBlobNotRequired=$newSampleClassBlobNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassDateTimeFutureNotRequired(): null|\DateTime {
-		
+		return $this->sampleClassDateTimeFutureNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassDateTimeFutureNotRequired(null|string|\DateTime $newSampleClassDateTimeFutureNotRequired) {
-		
+		$this->sampleClassDateTimeFutureNotRequired=$newSampleClassDateTimeFutureNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassDateTimeNowRequired():\DateTime {
-		
+		return $this->sampleClassDateTimeNowRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassDateTimeNowRequired(string|\DateTime $newSampleClassDateTimeNowRequired) {
-		
+		$this->sampleClassDateTimeNowRequired=$newSampleClassDateTimeNowRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassDateTimePastRequired():\DateTime {
-		
+		return $this->sampleClassDateTimePastRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassDateTimePastRequired(string|\DateTime $newSampleClassDateTimePastRequired) {
-		
+		$this->sampleClassDateTimePastRequired=$newSampleClassDateTimePastRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassEnumStringRequired():string {
-		
+		return $this->sampleClassEnumStringRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassEnumStringRequired(string $newSampleClassEnumStringRequired) {
-		
+		$this->sampleClassEnumStringRequired=$newSampleClassEnumStringRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassExactDecimalRequired():float {
-		
+		return $this->sampleClassExactDecimalRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassExactDecimalRequired(float $newSampleClassExactDecimalRequired) {
-		
+		$this->sampleClassExactDecimalRequired=$newSampleClassExactDecimalRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassIntegerNotRequired() : int|null {
-		
+		return $this->sampleClassIntegerNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassIntegerNotRequired(int|null $newSampleClassIntegerNotRequired) {
-		
+		$this->sampleClassIntegerNotRequired=$newSampleClassIntegerNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassJsonPackageNotRequired(): string|null {
-		
+		return $this->sampleClassJsonPackageNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassJsonPackageNotRequired(string|null $newSampleClassJsonPackageNotRequired) {
-		
+		$this->sampleClassJsonPackageNotRequired=$newSampleClassJsonPackageNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassRoundedDecimalNotRequired():float|null {
-		
+		return $this->sampleClassRoundedDecimalNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassRoundedDecimalNotRequired(float|null $newSampleClassRoundedDecimalNotRequired) {
-		
+		$this->sampleClassRoundedDecimalNotRequired=$newSampleClassRoundedDecimalNotRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassSetLengthStringRequired():string {
-		
+		return $this->sampleClassSetLengthStringRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassSetLengthStringRequired(string $newSampleClassSetLengthStringRequired) {
-		
+		$this->sampleClassSetLengthStringRequired=$newSampleClassSetLengthStringRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function getSampleClassVariableLengthStringRequired():string {
-		
+		return $this->sampleClassVariableLengthStringRequired;
 	}
 
 	/**
 	 * Method for 
 	 */
 	public function setSampleClassVariableLengthStringRequired(string $newSampleClassVariableLengthStringRequired) {
-		
+		$this->sampleClassVariableLengthStringRequired=$newSampleClassVariableLengthStringRequired;
 	}
 	}
