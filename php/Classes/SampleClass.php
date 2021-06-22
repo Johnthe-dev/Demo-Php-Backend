@@ -193,7 +193,7 @@ class SampleClass implements \JsonSerializable {
 	 * @throws \InvalidArgumentException
 	 * @throws \TypeError
 	 */
-	public function setSampleClassId(UuidInterface | string $newSampleClassId) {
+	public function setSampleClassId(UuidInterface | string $newSampleClassId):void {
 		/*
 		 * Check if sampleClassId is empty, throw an exception if it is
 		 */
@@ -226,7 +226,7 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassBitsRequired(string $newSampleClassBitsRequired) {
+	public function setSampleClassBitsRequired(string $newSampleClassBitsRequired):void {
 		/*
 		 * trim and run built in php sanitization on new string
 		 */
@@ -258,7 +258,7 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassBlobNotRequired(null|string $newSampleClassBlobNotRequired) {
+	public function setSampleClassBlobNotRequired(null|string $newSampleClassBlobNotRequired):void {
 		if(empty($newSampleClassBlobNotRequired)){
 			$newSampleClassBlobNotRequired=null;
 		}
@@ -285,9 +285,32 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for
+	 * @throws \Exception
+	 * @throws \RangeException
+	 * @throws \TypeError
+	 * @throws \InvalidArgumentException
 	 */
-	public function setSampleClassDateTimeFutureNotRequired(null|string|\DateTime $newSampleClassDateTimeFutureNotRequired) {
+	public function setSampleClassDateTimeFutureNotRequired(null|string|\DateTime $newSampleClassDateTimeFutureNotRequired):void {
+		//checks if $newSampleClassDateTimeFutureNotRequired is empty, if so skip additional validation
+		if(empty($newSampleClassDateTimeFutureNotRequired) === true) {
+			$newSampleClassDateTimeFutureNotRequired = null;
+		} else {
+			/*
+			 * validate datetime object
+			 */
+			try {
+				$newSampleClassDateTimeFutureNotRequired = self::validateDateTime($newSampleClassDateTimeFutureNotRequired);
+			} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
+			}
+			/*
+			 * date time checked to ensure it is in the future on insert. If it was verified here it would interfere with
+			 * creating objects from database results.
+			 */
+		}
+		//set DateTime variable or null to attribute in sampleClass object
 		$this->sampleClassDateTimeFutureNotRequired=$newSampleClassDateTimeFutureNotRequired;
 	}
 
@@ -301,7 +324,22 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassDateTimeNowRequired(string|\DateTime $newSampleClassDateTimeNowRequired) {
+	public function setSampleClassDateTimeNowRequired(string|\DateTime $newSampleClassDateTimeNowRequired):void {
+		//checks if $newSampleClassDateTimeNowRequired is empty, if so set to now
+		if(empty($newSampleClassDateTimeNowRequired) === true) {
+			$newSampleClassDateTimeNowRequired = new \DateTime();
+		} else {
+			/*
+			 * validate datetime object
+			 */
+			try {
+				$newSampleClassDateTimeNowRequired = self::validateDateTime($newSampleClassDateTimeNowRequired);
+			} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
+			}
+		}
+		//set DateTime variable or null to attribute in sampleClass object
 		$this->sampleClassDateTimeNowRequired=$newSampleClassDateTimeNowRequired;
 	}
 
@@ -315,7 +353,30 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassDateTimePastRequired(string|\DateTime $newSampleClassDateTimePastRequired) {
+	public function setSampleClassDateTimePastRequired(string|\DateTime $newSampleClassDateTimePastRequired):void {
+		//checks if $newSampleClassDateTimePastRequired is empty, if so throw error
+		if(empty($newSampleClassDateTimePastRequired) === true) {
+			throw (new \RangeException("Sample Class Exception: sampleClassDateTimePastRequired is required."));
+		} else {
+			/*
+			 * validate datetime object
+			 */
+			try {
+				$newSampleClassDateTimePastRequired = self::validateDateTime($newSampleClassDateTimePastRequired);
+			} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
+			}
+		}
+		/*
+		 * ensure that datetime provided is in the past. Since all dates in the database should have been in the past
+		 * when they were entered, this can be done in setter.
+		 */
+		$currentDatetime= new \DateTime();
+		if($currentDatetime<$newSampleClassDateTimePastRequired){
+			throw (new \RangeException("Sample Class Exception: sampleClassDateTimePastRequired needs to be a date in the past."));
+		}
+		//set DateTime variable or null to attribute in sampleClass object
 		$this->sampleClassDateTimePastRequired=$newSampleClassDateTimePastRequired;
 	}
 
@@ -329,7 +390,7 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassEnumStringRequired(string $newSampleClassEnumStringRequired) {
+	public function setSampleClassEnumStringRequired(string $newSampleClassEnumStringRequired):void {
 		/*
 		 * trim and run built in php sanitization on new string
 		 */
@@ -361,7 +422,7 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassExactDecimalRequired(float $newSampleClassExactDecimalRequired) {
+	public function setSampleClassExactDecimalRequired(float $newSampleClassExactDecimalRequired):void {
 		$this->sampleClassExactDecimalRequired=$newSampleClassExactDecimalRequired;
 	}
 
@@ -375,7 +436,7 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassIntegerNotRequired(int|null $newSampleClassIntegerNotRequired) {
+	public function setSampleClassIntegerNotRequired(int|null $newSampleClassIntegerNotRequired):void {
 		$this->sampleClassIntegerNotRequired=$newSampleClassIntegerNotRequired;
 	}
 
@@ -389,7 +450,25 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassJsonPackageNotRequired(string|null $newSampleClassJsonPackageNotRequired) {
+	public function setSampleClassJsonPackageNotRequired(string|null $newSampleClassJsonPackageNotRequired):void {
+		/*
+		 * trim and run built in php sanitization on new string
+		 */
+		$newSampleClassJsonPackageNotRequired=trim($newSampleClassJsonPackageNotRequired);
+		$newSampleClassJsonPackageNotRequired=filter_var($newSampleClassJsonPackageNotRequired, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		/*
+		 * Check if string is null or has no characters, throw an exception if true
+		 */
+		if(empty($newSampleClassJsonPackageNotRequired) || strlen($newSampleClassJsonPackageNotRequired)<=0){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+		}
+		/*
+		 * Check if string has too many characters to be stored in the database
+		 */
+		elseif(strlen($newSampleClassJsonPackageNotRequired)>200){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired has too many characters after sanitization."));
+		}
+
 		$this->sampleClassJsonPackageNotRequired=$newSampleClassJsonPackageNotRequired;
 	}
 
@@ -403,7 +482,7 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassRoundedDecimalNotRequired(float|null $newSampleClassRoundedDecimalNotRequired) {
+	public function setSampleClassRoundedDecimalNotRequired(float|null $newSampleClassRoundedDecimalNotRequired):void {
 		$this->sampleClassRoundedDecimalNotRequired=$newSampleClassRoundedDecimalNotRequired;
 	}
 
@@ -417,7 +496,25 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassSetLengthStringRequired(string $newSampleClassSetLengthStringRequired) {
+	public function setSampleClassSetLengthStringRequired(string $newSampleClassSetLengthStringRequired):void {
+		/*
+		 * trim and run built in php sanitization on new string
+		 */
+		$newSampleClassSetLengthStringRequired=trim($newSampleClassSetLengthStringRequired);
+		$newSampleClassSetLengthStringRequired=filter_var($newSampleClassSetLengthStringRequired, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		/*
+		 * Check if string is null or has no characters, throw an exception if true
+		 */
+		if(empty($newSampleClassSetLengthStringRequired) || strlen($newSampleClassSetLengthStringRequired)<=0){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+		}
+		/*
+		 * Check if string has too many characters to be stored in the database
+		 */
+		elseif(strlen($newSampleClassSetLengthStringRequired)>200){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired has too many characters after sanitization."));
+		}
+
 		$this->sampleClassSetLengthStringRequired=$newSampleClassSetLengthStringRequired;
 	}
 
@@ -431,7 +528,24 @@ class SampleClass implements \JsonSerializable {
 	/**
 	 * Method for 
 	 */
-	public function setSampleClassVariableLengthStringRequired(string $newSampleClassVariableLengthStringRequired) {
+	public function setSampleClassVariableLengthStringRequired(string $newSampleClassVariableLengthStringRequired):void {
+		/*
+		 * trim and run built in php sanitization on new string
+		 */
+		$newSampleClassVariableLengthStringRequired=trim($newSampleClassVariableLengthStringRequired);
+		$newSampleClassVariableLengthStringRequired=filter_var($newSampleClassVariableLengthStringRequired, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		/*
+		 * Check if string is null or has no characters, throw an exception if true
+		 */
+		if(empty($newSampleClassVariableLengthStringRequired) || strlen($newSampleClassVariableLengthStringRequired)<=0){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+		}
+		/*
+		 * Check if string has too many characters to be stored in the database
+		 */
+		elseif(strlen($newSampleClassVariableLengthStringRequired)>200){
+			throw (new \RangeException("Sample Class Exception: sampleClassVariableLengthStringRequired has too many characters after sanitization."));
+		}
 		$this->sampleClassVariableLengthStringRequired=$newSampleClassVariableLengthStringRequired;
 	}
 	}
