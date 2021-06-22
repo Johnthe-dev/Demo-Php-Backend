@@ -259,6 +259,21 @@ class SampleClass implements \JsonSerializable {
 	 * Method for 
 	 */
 	public function setSampleClassBlobNotRequired(null|string $newSampleClassBlobNotRequired) {
+		if(empty($newSampleClassBlobNotRequired)){
+			$newSampleClassBlobNotRequired=null;
+		}
+		/*
+		 * trim and run built in php sanitization on new string
+		 */
+		$newSampleClassBlobNotRequired=trim($newSampleClassBlobNotRequired);
+		$newSampleClassBlobNotRequired=filter_var($newSampleClassBlobNotRequired, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		/*
+		 * Check if string is null or has no characters, throw an exception if true
+		 */
+		if(strlen($newSampleClassBlobNotRequired)<=0){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+		}
+
 		$this->sampleClassBlobNotRequired=$newSampleClassBlobNotRequired;
 	}
 
@@ -315,6 +330,24 @@ class SampleClass implements \JsonSerializable {
 	 * Method for 
 	 */
 	public function setSampleClassEnumStringRequired(string $newSampleClassEnumStringRequired) {
+		/*
+		 * trim and run built in php sanitization on new string
+		 */
+		$newSampleClassEnumStringRequired=trim($newSampleClassEnumStringRequired);
+		$newSampleClassEnumStringRequired=filter_var($newSampleClassEnumStringRequired, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		/*
+		 * Check if string is null or has no characters, throw an exception if true
+		 */
+		if(empty($newSampleClassEnumStringRequired) || strlen($newSampleClassEnumStringRequired)<=0){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+		}
+		/*
+		 * Check if string has too many characters to be stored in the database
+		 */
+		elseif(strlen($newSampleClassEnumStringRequired)>200){
+			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired has too many characters after sanitization."));
+		}
+
 		$this->sampleClassEnumStringRequired=$newSampleClassEnumStringRequired;
 	}
 
