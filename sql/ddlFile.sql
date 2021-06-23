@@ -11,7 +11,6 @@ CREATE TABLE sampleClass  (
 	sampleClassExactDecimalRequired DECIMAL(15,2) NOT NULL,
 	sampleClassIntegerNotRequired INT NULL,
 	sampleClassJsonPackageNotRequired JSON NULL,
-	sampleClassRoundedDecimalNotRequired FLOAT(10,2) NULL,
 	sampleClassSetLengthStringRequired CHAR(10) NOT NULL,
 	sampleClassVariableLengthStringRequired VARCHAR(250) NOT NULL,
 	PRIMARY KEY (sampleClassId)

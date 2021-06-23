@@ -91,13 +91,6 @@ class SampleClass implements \JsonSerializable {
 	private string|null $sampleClassJsonPackageNotRequired;
 
 	/**
-	 * This is a representative of any attribute that is a double that will be rounded to two decimals in SQL.
-	 * sampleClass Attribute sampleClassRoundedDecimalNotRequired, not required
-	 * @var float|null $sampleClassRoundedDecimalNotRequired
-	 */
-	private float|null $sampleClassRoundedDecimalNotRequired;
-
-	/**
 	 * This is a representative of any attribute that is a required string with a specific length
 	 * sampleClass Attribute sampleClassSetLengthStringRequired, required
 	 * @var string $sampleClassSetLengthStringRequired
@@ -132,7 +125,6 @@ class SampleClass implements \JsonSerializable {
 	 * @param float $sampleClassExactDecimalRequired
 	 * @param int|null $sampleClassIntegerNotRequired
 	 * @param string|null $sampleClassJsonPackageNotRequired
-	 * @param float|null $sampleClassRoundedDecimalNotRequired
 	 * @param string $sampleClassSetLengthStringRequired
 	 * @param string $sampleClassVariableLengthStringRequired
 	 * @throws \InvalidArgumentException if data is empty or Invalid
@@ -145,8 +137,8 @@ class SampleClass implements \JsonSerializable {
 		null|string|\DateTime $sampleClassDateTimeFutureNotRequired, string|\DateTime $sampleClassDateTimeNowRequired,
 		string|\DateTime $sampleClassDateTimePastRequired, string $sampleClassEnumStringRequired,
 		float $sampleClassExactDecimalRequired, int|null $sampleClassIntegerNotRequired,
-		string|null $sampleClassJsonPackageNotRequired, float|null $sampleClassRoundedDecimalNotRequired,
-		string $sampleClassSetLengthStringRequired, string $sampleClassVariableLengthStringRequired) {
+		string|null $sampleClassJsonPackageNotRequired, string $sampleClassSetLengthStringRequired,
+		string $sampleClassVariableLengthStringRequired) {
 		try {
 			//construct SampleClass
 			$this->setSampleClassId($sampleClassId);
@@ -159,7 +151,6 @@ class SampleClass implements \JsonSerializable {
 			$this->setSampleClassExactDecimalRequired($sampleClassExactDecimalRequired);
 			$this->setSampleClassIntegerNotRequired($sampleClassIntegerNotRequired);
 			$this->setSampleClassJsonPackageNotRequired($sampleClassJsonPackageNotRequired);
-			$this->setSampleClassRoundedDecimalNotRequired($sampleClassRoundedDecimalNotRequired);
 			$this->setSampleClassSetLengthStringRequired($sampleClassSetLengthStringRequired);
 			$this->setSampleClassVariableLengthStringRequired($sampleClassVariableLengthStringRequired);
 		} // determine which exception was thrown, if any
@@ -179,7 +170,10 @@ class SampleClass implements \JsonSerializable {
 	 */
 	
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassId
+	 * Primary Key
+	 * 
+	 * @return UuidInterface
 	 */
 	public function getSampleClassId():UuidInterface{
 		return $this->sampleClassId;
@@ -217,14 +211,19 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassBitsRequired
+	 *
+	 * @return string
 	 */
 	public function getSampleClassBitsRequired():string {
 		return $this->sampleClassBitsRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting sampleClassBitsRequired
+	 * 
+	 * @param string $newSampleClassBitsRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassBitsRequired(string $newSampleClassBitsRequired):void {
 		/*
@@ -249,14 +248,19 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassBlobNotRequired
+	 *
+	 * @return string|null
 	 */
 	public function getSampleClassBlobNotRequired():null|string {
 		return $this->sampleClassBlobNotRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassBlobNotRequired
+	 *
+	 * @param string|null $newSampleClassBlobNotRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassBlobNotRequired(null|string $newSampleClassBlobNotRequired):void {
 		if(empty($newSampleClassBlobNotRequired)){
@@ -278,18 +282,22 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassDateTimeFutureNotRequired
+	 *
+	 * @return null|\DateTime
 	 */
 	public function getSampleClassDateTimeFutureNotRequired(): null|\DateTime {
 		return $this->sampleClassDateTimeFutureNotRequired;
 	}
 
 	/**
-	 * Method for
-	 * @throws \Exception
+	 * Method for setting the sampleClassDateTimeFutureNotRequired
+	 *
+	 * @param string|null|\DateTime $newSampleClassDateTimeFutureNotRequired
 	 * @throws \RangeException
-	 * @throws \TypeError
+	 * @throws \Exception
 	 * @throws \InvalidArgumentException
+	 * @throws \TypeError
 	 */
 	public function setSampleClassDateTimeFutureNotRequired(null|string|\DateTime $newSampleClassDateTimeFutureNotRequired):void {
 		//checks if $newSampleClassDateTimeFutureNotRequired is empty, if so skip additional validation
@@ -307,7 +315,8 @@ class SampleClass implements \JsonSerializable {
 			}
 			/*
 			 * date time checked to ensure it is in the future on insert. If it was verified here it would interfere with
-			 * creating objects from database results.
+			 * creating objects from database results with sampleClassDateTimeFutureNotRequired that was in the future at
+			 * time of creation, but no longer is.
 			 */
 		}
 		//set DateTime variable or null to attribute in sampleClass object
@@ -315,14 +324,22 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassDateTimeNowRequired
+	 *
+	 * @return \DateTime
 	 */
 	public function getSampleClassDateTimeNowRequired():\DateTime {
 		return $this->sampleClassDateTimeNowRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassDateTimeNowRequired
+	 *
+	 * @param string|\DateTime $newSampleClassDateTimeNowRequired
+	 * @throws \RangeException
+	 * @throws \Exception
+	 * @throws \InvalidArgumentException
+	 * @throws \TypeError
 	 */
 	public function setSampleClassDateTimeNowRequired(string|\DateTime $newSampleClassDateTimeNowRequired):void {
 		//checks if $newSampleClassDateTimeNowRequired is empty, if so set to now
@@ -344,14 +361,22 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassDateTimePastRequired
+	 *
+	 * @return \DateTime
 	 */
 	public function getSampleClassDateTimePastRequired():\DateTime {
 		return $this->sampleClassDateTimePastRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassDateTimePastRequired
+	 *
+	 * @param string|\DateTime $newSampleClassDateTimePastRequired
+	 * @throws \RangeException
+	 * @throws \Exception
+	 * @throws \InvalidArgumentException
+	 * @throws \TypeError
 	 */
 	public function setSampleClassDateTimePastRequired(string|\DateTime $newSampleClassDateTimePastRequired):void {
 		//checks if $newSampleClassDateTimePastRequired is empty, if so throw error
@@ -381,14 +406,19 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassEnumStringRequired
+	 *
+	 * @return string
 	 */
 	public function getSampleClassEnumStringRequired():string {
 		return $this->sampleClassEnumStringRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassEnumStringRequired
+	 *
+	 * @param string $newSampleClassEnumStringRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassEnumStringRequired(string $newSampleClassEnumStringRequired):void {
 		/*
@@ -400,55 +430,103 @@ class SampleClass implements \JsonSerializable {
 		 * Check if string is null or has no characters, throw an exception if true
 		 */
 		if(empty($newSampleClassEnumStringRequired) || strlen($newSampleClassEnumStringRequired)<=0){
-			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired is a required field."));
+			throw (new \RangeException("Sample Class Exception: sampleClassEnumStringRequired is a required field."));
 		}
 		/*
-		 * Check if string has too many characters to be stored in the database
+		 * Check if string is one of the valid strings
 		 */
-		elseif(strlen($newSampleClassEnumStringRequired)>200){
-			throw (new \RangeException("Sample Class Exception: sampleClassBitsRequired has too many characters after sanitization."));
+		$stringOptionsArray=['itemOne','itemTwo','itemThree'];
+		if(!in_array($newSampleClassEnumStringRequired, $stringOptionsArray, true)){
+			throw (new \RangeException("Sample Class Exception: sampleClassEnumStringRequired is not one of the predefined acceptable values."));
 		}
 
 		$this->sampleClassEnumStringRequired=$newSampleClassEnumStringRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassExactDecimalRequired
+	 *
+	 * @return float
 	 */
 	public function getSampleClassExactDecimalRequired():float {
 		return $this->sampleClassExactDecimalRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassExactDecimalRequired
+	 *
+	 * @param float $newSampleClassExactDecimalRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassExactDecimalRequired(float $newSampleClassExactDecimalRequired):void {
+
+		$newSampleClassExactDecimalRequired = filter_var($newSampleClassExactDecimalRequired, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+		if(empty($newSampleClassExactDecimalRequired)&&$newSampleClassExactDecimalRequired!==0){
+			throw (new \RangeException("Sample Class Exception: sampleClassExactDecimalRequired is a required field."));
+		}
+		/*
+		 * Checking if value is too large or too small
+		 */
+		if($newSampleClassExactDecimalRequired>9999999999999.99){
+			throw (new \RangeException("Sample Class Exception: sampleClassExactDecimalRequired is too large of a number."));
+		}
+		if($newSampleClassExactDecimalRequired<-9999999999999.99){
+			throw (new \RangeException("Sample Class Exception: sampleClassExactDecimalRequired is too small of a number."));
+		}
+		/*
+		 * Make variable a two decimal float.
+		 */
+		$newSampleClassExactDecimalRequired=round($newSampleClassExactDecimalRequired,2);
 		$this->sampleClassExactDecimalRequired=$newSampleClassExactDecimalRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassIntegerNotRequired
+	 *
+	 * @return int|null
 	 */
 	public function getSampleClassIntegerNotRequired() : int|null {
 		return $this->sampleClassIntegerNotRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassIntegerNotRequired
+	 *
+	 * @param int|null $newSampleClassIntegerNotRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassIntegerNotRequired(int|null $newSampleClassIntegerNotRequired):void {
-		$this->sampleClassIntegerNotRequired=$newSampleClassIntegerNotRequired;
+		$newSampleClassIntegerNotRequired = filter_var($newSampleClassIntegerNotRequired, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($newSampleClassIntegerNotRequired)&&$newSampleClassIntegerNotRequired!==0){
+			$this->sampleClassIntegerNotRequired=null;
+		} else {
+			/*
+			 * Checking if value is too large or too small
+			 */
+			if($newSampleClassIntegerNotRequired>2147483647){
+				throw (new \RangeException("Sample Class Exception: sampleClassExactDecimalRequired is too large of a number."));
+			}
+			if($newSampleClassIntegerNotRequired<-2147483647){
+				throw (new \RangeException("Sample Class Exception: sampleClassExactDecimalRequired is too small of a number."));
+			}
+			$this->sampleClassIntegerNotRequired=$newSampleClassIntegerNotRequired;
+		}
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassJsonPackageNotRequired
+	 *
+	 * @return string|null
 	 */
 	public function getSampleClassJsonPackageNotRequired(): string|null {
 		return $this->sampleClassJsonPackageNotRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassJsonPackageNotRequired
+	 *
+	 * @param string|null $newSampleClassJsonPackageNotRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassJsonPackageNotRequired(string|null $newSampleClassJsonPackageNotRequired):void {
 		/*
@@ -473,28 +551,19 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
-	 */
-	public function getSampleClassRoundedDecimalNotRequired():float|null {
-		return $this->sampleClassRoundedDecimalNotRequired;
-	}
-
-	/**
-	 * Method for 
-	 */
-	public function setSampleClassRoundedDecimalNotRequired(float|null $newSampleClassRoundedDecimalNotRequired):void {
-		$this->sampleClassRoundedDecimalNotRequired=$newSampleClassRoundedDecimalNotRequired;
-	}
-
-	/**
-	 * Method for 
+	 * Method for retrieving sampleClassSetLengthStringRequired
+	 *
+	 * @return string
 	 */
 	public function getSampleClassSetLengthStringRequired():string {
 		return $this->sampleClassSetLengthStringRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassSetLengthStringRequired
+	 *
+	 * @param string $newSampleClassSetLengthStringRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassSetLengthStringRequired(string $newSampleClassSetLengthStringRequired):void {
 		/*
@@ -519,14 +588,19 @@ class SampleClass implements \JsonSerializable {
 	}
 
 	/**
-	 * Method for 
+	 * Method for retrieving sampleClassVariableLengthStringRequired
+	 *
+	 * @return string
 	 */
 	public function getSampleClassVariableLengthStringRequired():string {
 		return $this->sampleClassVariableLengthStringRequired;
 	}
 
 	/**
-	 * Method for 
+	 * Method for setting the sampleClassVariableLengthStringRequired
+	 *
+	 * @param string $newSampleClassVariableLengthStringRequired
+	 * @throws \RangeException
 	 */
 	public function setSampleClassVariableLengthStringRequired(string $newSampleClassVariableLengthStringRequired):void {
 		/*
@@ -547,5 +621,74 @@ class SampleClass implements \JsonSerializable {
 			throw (new \RangeException("Sample Class Exception: sampleClassVariableLengthStringRequired has too many characters after sanitization."));
 		}
 		$this->sampleClassVariableLengthStringRequired=$newSampleClassVariableLengthStringRequired;
+	}
+
+
+	/***
+	 *      __  __   ______   _______   _    _    ____    _____     _____
+	 *     |  \/  | |  ____| |__   __| | |  | |  / __ \  |  __ \   / ____|
+	 *     | \  / | | |__       | |    | |__| | | |  | | | |  | | | (___
+	 *     | |\/| | |  __|      | |    |  __  | | |  | | | |  | |  \___ \
+	 *     | |  | | | |____     | |    | |  | | | |__| | | |__| |  ____) |
+	 *     |_|  |_| |______|    |_|    |_|  |_|  \____/  |_____/  |_____/
+	 */
+
+	/**
+	 * INSERT
+	 * Inserts sampleClass into MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException if MySQL errors occur
+	 * @throws \TypeError if $PDO is not a PDO connection object
+	 */
+	public function insert(\PDO $pdo): void {
+		//create query template
+		$query = "INSERT INTO sampleClass(loginAttemptId, loginAttemptDatetime, loginAttemptUsername) VALUES(:loginAttemptId, :loginAttemptDatetime, :loginAttemptUsername)";
+		$statement = $pdo->prepare($query);
+		//create parameters for query
+		$parameters = [
+			"loginAttemptId" => $this->loginAttemptId->getBytes(),
+			"loginAttemptDatetime" => $this->loginAttemptDatetime->format("Y-m-d H:i:s"),
+			"loginAttemptUsername" => $this->loginAttemptUsername
+		];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * UPDATE
+	 * updates sampleClass in MySQL database
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when MySQL related error occurs
+	 * @throws \TypeError if $pdo is not pdo connection object
+	 */
+	public function update(\PDO $pdo): void {
+		//create query template
+		$query = "UPDATE sampleClass SET loginAttemptId = :loginAttemptId, loginAttemptDatetime = :loginAttemptDatetime, loginAttemptUsername = :loginAttemptUsername WHERE loginAttemptId = :loginAttemptId";
+		$statement = $pdo->prepare($query);
+		// set parameters to execute query
+		$parameters = [
+			"loginAttemptId" => $this->loginAttemptId->getBytes(),
+			"loginAttemptDatetime" => $this->loginAttemptDatetime->format("Y-m-d H:i:s"),
+			"loginAttemptUsername" => $this->loginAttemptUsername
+		];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * DELETE
+	 * deletes sampleClass from MySQL database
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mysql related errors occur
+	 * @throws \TypeError when $pdo is not a PDO object
+	 */
+	public function delete(\PDO $pdo): void {
+		//create query template
+		$query = "DELETE FROM sampleClass WHERE sampleClassId = :sampleClassId";
+		$statement = $pdo->prepare($query);
+		//set parameters to execute query
+		$parameters = ["sampleClassId" => $this->sampleClassId->getBytes()];
+		$statement->execute($parameters);
 	}
 	}
